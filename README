@@ -1,0 +1,42 @@
+This repository contains the following additional files associated with the manuscript "What the Protein Data Bank tells us about the evolutionary conservation of protein conformational diversity:"
+
+1. pdbflex_clustersWith2Subclusters.fa
+2. subclustering_output.csv
+3. blastp_output.csv.gz
+4. hmmscan_tblout.tsv
+5. compareDDMs.py
+6. DDMs_out.tsv
+
+The content and formats of these files is explained below:
+
+
+1. pdbflex_clustersWith2Subclusters.fa: Fasta file of cluster master/representative sequences for the PDBFlex clusters with exactly 2 subclusters.
+
+2. subclustering_output.csv: Output from the subcluster calculation. It contains the following 3 comma-separated columns:
+	- CLUSTER_REP: The PDB chain ID of cluster master/representative.
+	- SUBCLUSTER_REP: The PDB chain ID of subcluster representative.
+	- SUBCLUSTER_MEMBERS: List of subcluster members in the following format: "['1abcD', '2efgH', '3ijkL']"
+	Note: this list does NOT include the subcluster representative. Therefore, in cases where the subcluster representative is the only member of a subcluster, this field will contain "[]" only.
+
+3. blastp_output.csv.gz: gzipped BLASTP output. The blastp_output.csv file was created by running blastp as follows:
+	blastp -query <fasta of master sequences> -db <db name> -out <output file name> -outfmt “10 qseqid qlen sseqid slen pident length mismatch gapopen qstart qend sstart send qseq sseq evalue bitscore score frames btop qcovs qcovhsp” -max_target_seqs 1815 -evalue 0.005 -num_threads 5
+
+4. hmmscan_tblout.tsv: hmmscan "tblout" output.	It contains the following tab-separated columns: Target_name, Target_accession, Query_name, Query_accession, Full_seq_evalue, Full_seq_score, Full_seq_bias, Best_1_dom_evalue, Best_1_dom_score, Best_1_dom_bias, exp, reg, clu, ov, env, dom, rep, inc, Description_of_target 
+
+5. compareDDMs.py: Script used to calculate DDMs and DDM correlations
+
+6. DDMs_out.tsv: Output from the DDM and correlation calculation step. It contains the following tab-separated columns:
+	- QUERY_CLUSTER: Query cluster from the blastp alignment.
+	- SUBJECT_CLUSTER: Subject cluster from the blastp alignment.
+	- CLUSTER_SEQUENCE_ID: Sequence identity from the blastp output.
+	- QUERY_SUBCLUSTERS: Subcluster representatives of the query cluster in this format: "['1abcD', '2efgH']"
+	- SUBJECT_SUBCLUSTERS: Subcluster representatives of the subject cluster in the same format as above.
+	- DDM_CORRELATION_PEARSON: Pearson DDM correlation
+	- P-VALUE_PEARSON: p-value of the Pearson correlation
+	- DDM_CORRELATION_SPEARMAN: Spearman DDM correlation
+	- P-VALUE_SPEARMAN: p-value of the Spearman correlation
+	- FIXED_SEQ_ID: "Fixed" sequence ID of the homologs. This is calculated based on the alignment of one subcluster rep from each homolog, after correcting it to include only the residues resolved in the structures of all four subcluster representatives.
+	- IG_PAIR: TRUE if the either the query cluster or the subject cluster or both belong to the Ig superfamily. FALSE if neither the query cluster nor the subject cluster belong to the Ig superfamily.
+	- SEQ_ID_RANGE: Sequence identity range (based on the CLUSTER_SEQUENCE_ID column): "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80-90" or "90-100"
+
+
