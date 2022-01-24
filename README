@@ -1,16 +1,16 @@
 This repository contains the following additional files associated with the manuscript "What the Protein Data Bank tells us about the evolutionary conservation of protein conformational diversity:"
 
-1. pdbflex_clustersWith2Subclusters.fa
+1. createSubclusters.py
 2. subclustering_output.csv
-3. blastp_output.csv.gz
-4. hmmscan_tblout.tsv
-5. compareDDMs.py
-6. DDMs_out.tsv
+3. pdbflex_clustersWith2Subclusters.fa
+4. blastp_output.csv.gz
+5. hmmscan_tblout.tsv
+6. compareDDMs.py
+7. DDMs_out.tsv
 
 The content and formats of these files is explained below:
 
-
-1. pdbflex_clustersWith2Subclusters.fa: Fasta file of cluster master/representative sequences for the PDBFlex clusters with exactly 2 subclusters.
+1. createSubclusters.py: Script used to create subclusters based on the all-to-all RMSD matrices for PDBFlex clusters.
 
 2. subclustering_output.csv: Output from the subcluster calculation. It contains the following 3 comma-separated columns:
 	- CLUSTER_REP: The PDB chain ID of cluster master/representative.
@@ -18,14 +18,16 @@ The content and formats of these files is explained below:
 	- SUBCLUSTER_MEMBERS: List of subcluster members in the following format: "['1abcD', '2efgH', '3ijkL']"
 	Note: this list does NOT include the subcluster representative. Therefore, in cases where the subcluster representative is the only member of a subcluster, this field will contain "[]" only.
 
-3. blastp_output.csv.gz: gzipped BLASTP output. The blastp_output.csv file was created by running blastp as follows:
+3. pdbflex_clustersWith2Subclusters.fa: Fasta file of cluster master/representative sequences for the PDBFlex clusters with exactly 2 subclusters.
+
+4. blastp_output.csv.gz: gzipped BLASTP output. The blastp_output.csv file was created by running blastp as follows:
 	blastp -query <fasta of master sequences> -db <db name> -out <output file name> -outfmt “10 qseqid qlen sseqid slen pident length mismatch gapopen qstart qend sstart send qseq sseq evalue bitscore score frames btop qcovs qcovhsp” -max_target_seqs 1815 -evalue 0.005 -num_threads 5
 
-4. hmmscan_tblout.tsv: hmmscan "tblout" output.	It contains the following tab-separated columns: Target_name, Target_accession, Query_name, Query_accession, Full_seq_evalue, Full_seq_score, Full_seq_bias, Best_1_dom_evalue, Best_1_dom_score, Best_1_dom_bias, exp, reg, clu, ov, env, dom, rep, inc, Description_of_target 
+5. hmmscan_tblout.tsv: hmmscan "tblout" output.	It contains the following tab-separated columns: Target_name, Target_accession, Query_name, Query_accession, Full_seq_evalue, Full_seq_score, Full_seq_bias, Best_1_dom_evalue, Best_1_dom_score, Best_1_dom_bias, exp, reg, clu, ov, env, dom, rep, inc, Description_of_target 
 
-5. compareDDMs.py: Script used to calculate DDMs and DDM correlations
+6. compareDDMs.py: Script used to calculate DDMs and DDM correlations
 
-6. DDMs_out.tsv: Output from the DDM and correlation calculation step. It contains the following tab-separated columns:
+7. DDMs_out.tsv: Output from the DDM and correlation calculation step. It contains the following tab-separated columns:
 	- QUERY_CLUSTER: Query cluster from the blastp alignment.
 	- SUBJECT_CLUSTER: Subject cluster from the blastp alignment.
 	- CLUSTER_SEQUENCE_ID: Sequence identity from the blastp output.
